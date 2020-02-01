@@ -39,6 +39,15 @@ docker:
 		docker build -t oryd/hydra:latest .
 		rm hydra
 
+.PHONY: idward 
+idward:
+		make sqlbin
+		CGO_ENABLED=0 GO111MODULE=on GOOS=linux GOARCH=amd64 go build
+		docker build -t eu.gcr.io/idward/hydra:latest .
+		rm hydra
+	    docker push eu.gcr.io/idward/hydra:latest
+
+
 .PHONY: e2e
 e2e:
 		make test-resetdb

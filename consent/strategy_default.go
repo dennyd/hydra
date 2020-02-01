@@ -302,7 +302,6 @@ func revokeAuthenticationCookie(w http.ResponseWriter, r *http.Request, s sessio
 
 	cookie.Options.MaxAge = -1
 	cookie.Values[CookieAuthenticationSIDName] = ""
-
 	if err := cookie.Save(r, w); err != nil {
 		return "", errors.WithStack(err)
 	}
@@ -444,6 +443,7 @@ func (s *DefaultStrategy) verifyAuthentication(w http.ResponseWriter, r *http.Re
 		cookie.Options.MaxAge = session.RememberFor
 	}
 	cookie.Options.HttpOnly = true
+	cookie.Options.SameSite = 4
 
 	if s.c.ServesHTTPS() {
 		cookie.Options.Secure = true

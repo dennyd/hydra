@@ -68,6 +68,8 @@ func createCsrfSession(w http.ResponseWriter, r *http.Request, store sessions.St
 	session.Values["csrf"] = csrf
 	session.Options.HttpOnly = true
 	session.Options.Secure = secure
+	session.Options.SameSite = 4
+
 	if err := session.Save(r, w); err != nil {
 		return errors.WithStack(err)
 	}
